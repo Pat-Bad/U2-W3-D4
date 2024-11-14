@@ -2,42 +2,38 @@
 
 const myURL = "https://api.pexels.com/v1/search?query=otters";
 
-//prendo il riferimento al button
+// la mia key 3Sp9NU47sl0NGG3kzkWS97OXF4mYgC0MG4GbOmdLtsun8yoOzEuI3VkW
 
-const load = document.getElementById("loadButton");
-//aggiungo l'event listener
-load.addEventListener("click", (e) => {
-		fetch(myURL, {
-			headers: {
-				Authorization:
-					"3Sp9NU47sl0NGG3kzkWS97OXF4mYgC0MG4GbOmdLtsun8yoOzEuI3VkW",
-			},
-		}).then((response) => {
-			if (response.ok) {
-				throw new Error("ERRORE NEL SERVER");
-			}
-			return response
-				.json()
+//fetch con la key
+const load = document.getElementById("loadButton")
 
-				.then((pictures) => {
-					console.log("ECCO LE FOTO", pictures);
+load.addEventListener('click', function(){
 
-					// seleziono la parte delle card dove dovrebbe andare l'immagine
+fetch(myURL, {headers: {
+		Authorization: "3Sp9NU47sl0NGG3kzkWS97OXF4mYgC0MG4GbOmdLtsun8yoOzEuI3VkW",
+	}})
+.then ((response)=>{
+    if (response.ok){
+        return response.json()
+    } else {
+        throw new Error ('errore')
+    }
+})
 
-					const cardTop = document.querySelectorAll(".card-img-top");
+.then ((pictures)=>{
+    console.log(pictures, 'ecco le foto')
 
-					// devo ciclare
+    const cardTop = document.querySelectorAll('.card-img-top')
 
-					cardTop.forEach((card) => {
-						// Check if the picture exists at the current index
-						if (pictures.photos) {
-							// Set the image source dynamically
-							card.setAttribute("src", pictures.photos.url);
-						}
-					});
-				});
-		});
-	})
-	.catch((error) => {
-		console.log("ERRORE!", error);
-	});
+
+    cardTop.forEach((card)=>{
+        card.setAttribute('src', pictures.photos[i].url)
+    })
+})
+
+
+
+.catch((error)=>{console.log('errore!')}
+)
+
+})
